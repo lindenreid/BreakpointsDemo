@@ -61,9 +61,15 @@ public class GameController : MonoBehaviour
 
             GameObject fruit = Instantiate(_fruitPrefab, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
             fruit.name = "Fruit " + fruitNumber;
-            fruitNumber++;
 
+            SpriteRenderer fruitSprite = fruit.GetComponent<SpriteRenderer>();
+            if(fruitNumber == _numFruit % 3)
+            {
+                fruitSprite.color = Color.red;
+            }
+            
             _fruits.Add(fruit);
+            fruitNumber++;
         }
 
         // reset player location
