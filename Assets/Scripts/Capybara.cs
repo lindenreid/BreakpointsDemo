@@ -61,10 +61,20 @@ public class Capybara : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) 
     {
-        Rigidbody2D fruit = collision.rigidbody;
-        if(fruit != null)
+        Rigidbody2D fruitBody = collision.rigidbody;
+        if(fruitBody != null)
         {
-            fruit.AddForce(_lastMovementDirection * _force, ForceMode2D.Impulse);
+            fruitBody.AddForce(_lastMovementDirection * _force, ForceMode2D.Impulse);
+        }
+
+        SpriteRenderer fruitSprite = fruitBody.GetComponent<SpriteRenderer>();
+        if(fruitSprite != null)
+        {
+            fruitSprite.color = new Color(
+                Random.Range(0.0f, 1.0f),
+                Random.Range(0.0f, 1.0f),
+                Random.Range(0.0f, 1.0f)
+            );
         }
     }
 }

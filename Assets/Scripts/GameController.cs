@@ -9,7 +9,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private Vector2 _worldBoundsMax;
     [SerializeField] private int _numFruit = 100;
 
-    private List<GameObject> _fruits;
+    private List<GameObject> _fruits = new List<GameObject>();
+    int fruitNumber = 0;
 
     private void Awake ()
     {
@@ -45,8 +46,6 @@ public class GameController : MonoBehaviour
 
     private void ResetGame ()
     {
-        _fruits = new List<GameObject>();
-
         // destroy existing fruits
         foreach(GameObject fruit in _fruits)
         {
@@ -61,6 +60,9 @@ public class GameController : MonoBehaviour
             float y = UnityEngine.Random.Range(_worldBoundsMin.y, _worldBoundsMax.y);
 
             GameObject fruit = Instantiate(_fruitPrefab, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
+            fruit.name = "Fruit " + fruitNumber;
+            fruitNumber++;
+
             _fruits.Add(fruit);
         }
 
