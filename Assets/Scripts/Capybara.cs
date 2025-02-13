@@ -55,7 +55,7 @@ public class Capybara : MonoBehaviour
         transform.Translate(newDir * _speed * Time.deltaTime);
 
         if(newDir != Vector3.zero) {
-            
+            _lastMovementDirection = newDir;
         }
     }
 
