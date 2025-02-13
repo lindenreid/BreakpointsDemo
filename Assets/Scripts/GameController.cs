@@ -11,20 +11,21 @@ public class GameController : MonoBehaviour
 
     private List<GameObject> _fruits;
 
-    private void Start () {
-        _fruits = new List<GameObject>();
+    private void Awake ()
+    {
+        ResetGame();
+    }
 
-        for(int i = 0; i < _numFruit; i++)
+    private void Update ()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-            float x = UnityEngine.Random.Range(_worldBoundsMin.x, _worldBoundsMax.x);
-            float y = UnityEngine.Random.Range(_worldBoundsMin.y, _worldBoundsMax.y);
-
-            GameObject fruit = Instantiate(_fruitPrefab, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
-            _fruits.Add(fruit);
+            ResetGame();
         }
     }
 
-    private void OnDrawGizmos () {
+    private void OnDrawGizmos ()
+    {
         Gizmos.color = Color.red;
 
         Vector3 center = new Vector3 (
@@ -40,5 +41,30 @@ public class GameController : MonoBehaviour
         );
 
         Gizmos.DrawWireCube(center, size);
+    }
+
+    private void ResetGame ()
+    {
+        _fruits = new List<GameObject>();
+
+        // destroy existing fruits
+        foreach(GameObject fruit in _fruits)
+        {
+            Destroy(fruit);
+        }
+        _fruits.Clear();
+
+        // add new fruits
+        for(int i = 0; i < _numFruit; i++)
+        {
+            float x = UnityEngine.Random.Range(_worldBoundsMin.x, _worldBoundsMax.x);
+            float y = UnityEngine.Random.Range(_worldBoundsMin.y, _worldBoundsMax.y);
+
+            GameObject fruit = Instantiate(_fruitPrefab, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
+            _fruits.Add(fruit);
+        }
+
+        // reset player location
+        Capybara.Instance.ResetLocation();
     }
 }

@@ -8,6 +8,24 @@ public class Capybara : MonoBehaviour
 
     private Vector3 _lastMovementDirection;
 
+    public static Capybara Instance { get; private set; }
+
+    private void Start () 
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+
+        Instance = this;
+    }
+
+    public void ResetLocation ()
+    {
+        transform.position = Vector3.zero;
+    }
+
     private void Update ()
     {
         Vector3 newDir = Vector3.zero;
@@ -37,7 +55,7 @@ public class Capybara : MonoBehaviour
         transform.Translate(newDir * _speed * Time.deltaTime);
 
         if(newDir != Vector3.zero) {
-            _lastMovementDirection = newDir;
+            
         }
     }
 
